@@ -8,16 +8,14 @@ Increase / set [version numbers](http://semver.org/) in package.json.
 
 ```bash
 $ npm -g install v.js
-
 ```
 
 ### Use ###
 
 ```bash
-v.js -h   # Help
-v.js -M   # Increment Major version
-v.js -m   # Increment Minor version
-v.js -p   # Increment Patch number
-v.js --set 1.2.3 # Manually set version
-
+v -h   # Help
+v -M   # Increment Major version
+v -m   # Increment Minor version
+v -p   # Increment Patch number
+v --set 1.2.3 # Manually set version
 ```
