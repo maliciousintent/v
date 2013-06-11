@@ -40,20 +40,19 @@ if (program.set != null) {
     
     version = data.version.split('.');
     
-    if (program.patch != null) {
-      version[2] = parseInt(version[2], 10) + 1;
-    }
-    
-    if (program.minor != null) {
-      version[1] = parseInt(version[1], 10) + 1;
-      version[2] = 0;
-    }
-    
     if (program.major != null) {
       version[0] = parseInt(version[0], 10) + 1;
       version[1] = 0;
       version[2] = 0;
+    } else {
+      if (program.minor != null) {
+        version[1] = parseInt(version[1], 10) + 1;
+        version[2] = 0;
+      } else {
+        version[2] = parseInt(version[2], 10) + 1;
+      }
     }
+    
     
     data.version = version.join('.');
     clog.ok('Version set to', data.version);
