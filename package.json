@@ -1,6 +1,7 @@
 {
   "name": "v.js",
-  "version": "2.0.2",
+  "preferGlobal": true,
+  "version": "2.0.3",
   "description": "Increase / set version number in package.json.",
   "main": "index.js",
   "scripts": {},
