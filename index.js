@@ -9,7 +9,7 @@
  */
 
 var program = require('commander')
-  , clog = require('clog')
+  , clog = require('coolog').logger('v.js', true)
   , fs = require('fs')
   , data
   , version;
