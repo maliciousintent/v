@@ -9,31 +9,35 @@
  */
 
 var program = require('commander')
-  , clog = require('coolog').logger('v.js', true)
   , fs = require('fs')
   , data
   , version;
 
 program
-  .version('0.0.1')
-  .option('-M, --major', 'Auto increment mayor version and reset minor/patch')
-  .option('-m, --minor', 'Auto increment minor version and reset patch')
+  .option('-x, --print', 'Only print current version')
   .option('-p, --patch', 'Auto increment patch')
+  .option('-m, --minor', 'Auto increment minor version and reset patch')
+  .option('-M, --major', 'Auto increment mayor version and reset minor/patch')
   .option('-s, --set <M>.<m>.<p>', 'Manaully set version')
   .parse(process.argv);
 
 
 data = JSON.parse(fs.readFileSync('package.json'));
 
-clog.info('Current version is', data.version);
+console.log('Current version is', data.version);
 
+if (program['print'] != null) {
+  process.exit(0);
+  return;
+}
+  
 if (program.set != null) {
   data.version = program.set;
-  clog.ok('Version set to', data.version);
+  console.log('Version set to', data.version);
   
 } else {
   if (data.version == null) {
-    clog.error('Error: please set an initial version using --set');
+    console.warn('Error: please set an initial version using --set');
     process.exit(1);
     
   } else {
@@ -55,8 +59,9 @@ if (program.set != null) {
     
     
     data.version = version.join('.');
-    clog.ok('Version set to', data.version);
+    console.log('Version set to', data.version);
   }
 }
 
 fs.writeFileSync('package.json', JSON.stringify(data, null, 2));
+
