@@ -1,4 +1,4 @@
-v.js ![deps](https://david-dm.org/plasticpanda/v.js.png)
+v.js ![deps](https://david-dm.org/plasticpanda/v.png)
 ================
 
 **Increase / set [version numbers](http://semver.org/) in ```package.json``` files.**
