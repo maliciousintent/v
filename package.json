@@ -1,8 +1,8 @@
 {
   "name": "v.js",
   "preferGlobal": true,
-  "version": "0.1.0",
-  "description": "Increase / set version number in package.json.",
+  "version": "0.1.1",
+  "description": "Sets version number in package.json.",
   "main": "index.js",
   "scripts": {},
   "bin": {
@@ -13,15 +13,13 @@
     "url": "git://github.com/PlasticPanda/v.git"
   },
   "keywords": [
-    "nodejs",
-    "configuration",
-    "env"
+    "version",
+    "semver",
+    "package.json"
   ],
   "author": "Simone Lusenti <simone@plasticpanda.com>",
-  "license": "BSD",
-  "readmeFilename": "README.md",
-  "gitHead": "e420bd367cd1385bdf83de8b5d743b05885e0ba8",
+  "license": "MIT",
   "dependencies": {
-    "commander": "~1.1.1"
+    "commander": "~2.1.0"
   }
 }
