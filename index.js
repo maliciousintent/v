@@ -11,7 +11,9 @@
 var program = require('commander')
   , fs = require('fs')
   , data
-  , version;
+  , version
+  , mode = ''
+  ;
 
 program
   .option('-x, --print', 'Only print current version')
@@ -22,7 +24,21 @@ program
   .parse(process.argv);
 
 
-data = JSON.parse(fs.readFileSync('package.json'));
+if (fs.existsSync('package.json')) {
+  mode = 'package.json';
+  data = JSON.parse(fs.readFileSync('package.json'));
+  
+} else if (fs.existsSync('version.txt')) {
+  mode = 'version.txt';
+  data = {
+    version: fs.readFileSync('version.txt', { encoding: 'utf8' })
+  };
+  
+} else {
+  console.warn('ERROR: Either a valid package.json or version.txt file are required.');
+  process.exit(1);
+}
+
 
 console.log('Current version is', data.version);
 
@@ -63,5 +79,9 @@ if (program.set != null) {
   }
 }
 
-fs.writeFileSync('package.json', JSON.stringify(data, null, 2));
+if (mode === 'package.json') {
+  fs.writeFileSync('package.json', JSON.stringify(data, null, 2));
+} else {
+  fs.writeFileSync('version.txt', data.version);
+}
 
