@@ -1,7 +1,7 @@
 v.js ![deps](https://david-dm.org/plasticpanda/v.png)
 ================
 
-**Increase / set [version numbers](http://semver.org/) in ```package.json``` or ```[version.txt](https://gist.github.com/lusentis/8559421)`` files.**
+**Increase / set [version numbers](http://semver.org/) in ```package.json``` or [```version.txt```](https://gist.github.com/lusentis/8559421) files.**
 
 
 #### Install
