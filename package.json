@@ -1,7 +1,7 @@
 {
   "name": "v.js",
   "preferGlobal": true,
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "Sets version number in package.json.",
   "main": "index.js",
   "scripts": {},
@@ -20,6 +20,7 @@
   "author": "Simone Lusenti <simone@plasticpanda.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "~2.1.0"
+    "commander": "~2.1.0",
+    "coolog": "~3.0.0"
   }
 }

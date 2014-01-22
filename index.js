@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /*jshint node:true, indent:2, eqnull:true, laxcomma:true */
 
 /**
@@ -7,16 +6,32 @@
  * Usage:
  *  $ v.js --help
  */
+ 
+'use strict';
 
 var program = require('commander')
+  , coolog = require('coolog')
   , fs = require('fs')
+  , readline = require('readline')
+  ;
+
+
+coolog.addChannel({ name: 'root', level: 'debug', appenders: ['console'] });
+
+var logger = coolog.logger('cli')
   , data
   , version
   , mode = ''
+  , rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
   ;
+
 
 program
   .option('-x, --print', 'Only print current version')
+  .option('-i, --noinput', 'No input required from user (i.e.: not interactive)')
   .option('-p, --patch', 'Auto increment patch')
   .option('-m, --minor', 'Auto increment minor version and reset patch')
   .option('-M, --major', 'Auto increment mayor version and reset minor/patch')
@@ -35,25 +50,25 @@ if (fs.existsSync('package.json')) {
   };
   
 } else {
-  console.warn('ERROR: Either a valid package.json or version.txt file are required.');
+  logger.warn('ERROR: Either a valid package.json or version.txt file are required.');
   process.exit(1);
 }
 
 
-console.log('Current version is', data.version);
+logger.log('Current version is', data.version);
 
-if (program['print'] != null) {
+if (program.print != null) {
   process.exit(0);
   return;
 }
   
 if (program.set != null) {
   data.version = program.set;
-  console.log('Version set to', data.version);
+  logger.log('Version set to', data.version);
   
 } else {
   if (data.version == null) {
-    console.warn('Error: please set an initial version using --set');
+    logger.warn('Error: please set an initial version using --set');
     process.exit(1);
     
   } else {
@@ -75,13 +90,28 @@ if (program.set != null) {
     
     
     data.version = version.join('.');
-    console.log('Version set to', data.version);
+    logger.log('Version set to', data.version);
   }
 }
 
-if (mode === 'package.json') {
-  fs.writeFileSync('package.json', JSON.stringify(data, null, 2));
+
+if (program.noinput) {
+  process.nextTick(_done);
+  
 } else {
-  fs.writeFileSync('version.txt', data.version);
+  rl.question('What changed? ', function (line) {
+    fs.appendFile('CHANGELOG.md', '* ' + new Date().toISOString() + ' ' + line + '\n');
+    _done();
+    rl.close();
+  });
+}
+
+
+function _done() {
+  if (mode === 'package.json') {
+    fs.writeFileSync('package.json', JSON.stringify(data, null, 2));
+  } else {
+    fs.writeFileSync('version.txt', data.version);
+  }
 }
 
